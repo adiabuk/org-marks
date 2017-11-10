@@ -1,0 +1,24 @@
+{
+
+  "manifest_version": 2,
+  "name": "org-marks",
+  "version": "1.0",
+
+  "description": "Load bookmarks from org-mode",
+  "permissions": ["menus", "storage", "theme"],
+  "icons": {
+    "128": "icons/list-128.png"
+  },
+  "sidebar_action": {
+    "default_title":"org-marks",
+    "default_panel":"org-marks.html"
+  },
+  "background": {
+    "scripts": ["org-marks.js"]
+  },
+
+  "options_ui": {
+    "page": "options.html"
+  }
+
+}
