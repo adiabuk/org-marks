@@ -4,17 +4,17 @@ inputElement.addEventListener("change", handlePicked, false);
 
 function handlePicked() {
 
-  console.log(this.files[0]);
   fileURL = window.URL.createObjectURL(this.files[0]);
   fileEntry = this.files[0];
   var reader = new FileReader();
   reader.onload = function(e) {
     var srctext = reader.result;
     var firstline = srctext.split('\n')[0];
-    console.log('xxx' + firstline);
-    var newtext = re.exec(srctext);
     const regex = /\* Bookmarks([\s\S]*?.*?)\n\*?\s\S/g;
     m = regex.exec(srctext);
+    localStorage.mysetting = m;
+    localStorage["mysetting"] = m;
+    var newtext = regex.exec(srctext);
    }
   reader.readAsText(fileEntry);
 }

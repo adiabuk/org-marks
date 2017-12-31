@@ -3,17 +3,33 @@ function onError(error) {
 }
 
 var getting = browser.storage.local.get("input");
-getting.then(onGot, onError);
 
-function click() {
+function refresh() {
 
-console.log('hello');
-alert('hello);
-document.getElementById("myElement").innerHTML = "whatever";
+document.getElementById("myElement").innerHTML = getData();
 }
+
+function replacelink(html) {
+    return html.replace(/\[\[(.+?)\]\]/g, "<a href='#$1'>$1</a>");
+}
+function getData(){
+    document.getElementById("myElement").innerHTML = "No data";
+    a = '<a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>'
+    var lines = localStorage["mysetting"].split('\n');
+    var links = "";
+    for(var i = 0;i < lines.length;i++){
+    srctext = lines[i]
+    links += replacelink(lines[i]);
+    links += "\n";
+    }
+    document.getElementById("myElement").innerHTML = links;
+  return links
+  }
+
 
 function setSidebarStyle(theme) {
   const myElement = document.getElementById("myElement");
+  document.getElementById("button").addEventListener("click", refresh);
 
   // colors.frame and colors.accentcolor are aliases
   if (theme.colors && (theme.colors.accentcolor || theme.colors.frame)) {
@@ -28,9 +44,7 @@ function setSidebarStyle(theme) {
   } else {
     myElement.style.backgroundColor = "#ebebeb";
     myElement.text=getting;
-    document.getElementById("myElement").innerHTML = "whatever";
   }
-
   if (theme.colors && theme.colors.toolbar_text) {
     myElement.style.color = theme.colors.toolbar_text;
   } else {
@@ -86,66 +100,19 @@ function readFile(_path, _cb){
     });
 };
 
-//readFile('file:///home/amro/repos/personal/org-mode/remember.org', function(_res){
-readFile('file:///home/amro/test', function(_res){
+readFile('file:///Users/diaba/test', function(_res){
 
     console.log(_res); // <--  result (file content)
 
 });
 
-console.log('hello');
-
-browser.menus.create({
-  id: "remove-me",
-  title: "Hello", //browser.i18n.getMessage("menuItemRemoveMe"),
-  contexts: ["all"]
-}, onCreated);
-
-browser.menus.create({
-  id: "separator-1",
-  type: "separator",
-  contexts: ["all"]
-}, onCreated);
-
-browser.menus.create({
-  id: "greenify",
-  type: "radio",
-  title: browser.i18n.getMessage("menuItemGreenify"),
-  contexts: ["all"],
-  checked: true,
-  icons: {
-    "16": "icons/paint-green-16.png",
-    "32": "icons/paint-green-32.png"
-  }
-}, onCreated);
-
-browser.menus.create({
-  id: "bluify",
-  type: "radio",
-  title: browser.i18n.getMessage("menuItemBluify"),
-  contexts: ["all"],
-  checked: false,
-  icons: {
-    "16": "icons/paint-blue-16.png",
-    "32": "icons/paint-blue-32.png"
-  }
-}, onCreated);
-
-browser.menus.create({
-  id: "separator-2",
-  type: "separator",
-  contexts: ["all"]
-}, onCreated);
-
 var checkedState = true;
 
-browser.menus.create({
-  id: "check-uncheck",
-  type: "checkbox",
-  title: browser.i18n.getMessage("menuItemUncheckMe"),
-  contexts: ["all"],
-  checked: checkedState
-}, onCreated);
+var button=document.getElementById("button");
+button.addEventListener("click", refresh);
+document.getElementById("myElement").innerHTML = "No data!!";
+document.getElementById("button").addEventListener("click", displayDate);
 
-
-document.getElementById("button").addEventListener("click", click);
+function displayDate() {
+    document.getElementById("demo").innerHTML = Date();
+}
