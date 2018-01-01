@@ -10,17 +10,42 @@ document.getElementById("myElement").innerHTML = getData();
 }
 
 function replacelink(html) {
-    return html.replace(/\[\[(.+?)\]\]/g, "<a href='#$1'>$1</a>");
+    var re = new RegExp("^\\*\\*\\*\\s\\[\\[.*\\]\\[.*\\]\\]"); // [[http://google.com][google]]
+    var re2 = new RegExp("^\\*\\*\\*\\s\\[\\[.*\\]\\]");        // [[http://www.google.com]]
+    var re3 = new RegExp("^\\*\\*\\*\\shttp[s]?.*");            // http://www.google.com
+    var re4 = new RegExp("\\*\\* .*");                          // <title>
+
+    if (html.includes("DONE")) {
+      ret =  "";
+    }
+    else if (re.test(html)) {
+      ret = html.replace(/^\*\*\*\s\[\[(http[s]?.*)\]\[(.*)\]\]/g, "<a href='$1'>$2</a><br>");
+    }
+
+    else if (re2.test(html)){
+      ret = html.replace(/^\*\*\*\s\[\[(http[s]?.*)\]\]$/g, "<a href='$1'>$1</a><br>");
+    }
+    else if (re3.test(html)){
+      ret=html.replace(/^\*\*\*\s(http[s]?\:\/\/.*$)/g, "<a href='$1'>$1</a><br>");
+    }
+    else if (re4.test(html)){
+      ret = html.replace(/^\*\*\s(.*)$/g, "<h2>$1</h2><br>");
+    }
+    else {
+      ret = "";
+    }
+    return ret;
+
 }
+
 function getData(){
     document.getElementById("myElement").innerHTML = "No data";
     a = '<a href="https://www.w3schools.com/html/">Visit our HTML tutorial</a>'
     var lines = localStorage["mysetting"].split('\n');
     var links = "";
     for(var i = 0;i < lines.length;i++){
-    srctext = lines[i]
-    links += replacelink(lines[i]);
-    links += "\n";
+      links += replacelink(lines[i]);
+      links += "\n";
     }
     document.getElementById("myElement").innerHTML = links;
   return links
