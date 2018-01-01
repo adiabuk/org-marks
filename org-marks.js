@@ -19,17 +19,17 @@ function replacelink(html) {
       ret =  "";
     }
     else if (re.test(html)) {
-      ret = html.replace(/^\*\*\*\s\[\[(http[s]?.*)\]\[(.*)\]\]/g, "<a href='$1'>$2</a><br>");
+      ret = html.replace(/^\*\*\*\s\[\[(http[s]?.*)\]\[(.*)\]\]/g, "<a class='third after' href='$1'>$2</a><br>");
     }
 
     else if (re2.test(html)){
-      ret = html.replace(/^\*\*\*\s\[\[(http[s]?.*)\]\]$/g, "<a href='$1'>$1</a><br>");
+      ret = html.replace(/^\*\*\*\s\[\[(http[s]?.*)\]\]$/g, "<a class='third after' href='$1'>$1</a><br>");
     }
     else if (re3.test(html)){
-      ret=html.replace(/^\*\*\*\s(http[s]?\:\/\/.*$)/g, "<a href='$1'>$1</a><br>");
+      ret=html.replace(/^\*\*\*\s(http[s]?\:\/\/.*$)/g, "<a class='third after' href='$1'>$1</a><br>");
     }
     else if (re4.test(html)){
-      ret = html.replace(/^\*\*\s(.*)$/g, "<h2>$1</h2><br>");
+      ret = html.replace(/^\*\*\s(.*)$/g, "<h1>$1</h1><br>");
     }
     else {
       ret = "";
