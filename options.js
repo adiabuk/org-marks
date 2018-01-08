@@ -1,9 +1,7 @@
 const inputElement = document.getElementById("input");
 inputElement.addEventListener("change", handlePicked, false);
 
-
 function handlePicked() {
-
   fileURL = window.URL.createObjectURL(this.files[0]);
   fileEntry = this.files[0];
   var reader = new FileReader();
@@ -18,7 +16,6 @@ function handlePicked() {
    }
   reader.readAsText(fileEntry);
 }
-
 
 function saveOptions(e) {
   e.preventDefault();
